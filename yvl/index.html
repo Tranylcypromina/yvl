@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YVL / SH</title>
+    <meta name="description" content="High Performance Telemetry">
+    
+    <link rel="icon" href="yvl.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="brand-block" id="btnReset">
+            <h1 class="hero-title">YVL<br>/ SH</h1>
+        </div>
+        <nav class="nav-vertical">
+            <button class="nav-main active" data-target="view-data" data-i18n="nav_data">01_DATA</button>
+            <button class="nav-main" data-target="view-media" data-i18n="nav_media">02_VIDEO</button>
+            
+            <div class="nav-system">
+                <button id="langToggle" class="nav-sm">[ ES ]</button>
+                <button id="themeToggle" class="nav-sm">[ DAY ]</button>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="content-feed">
+        
+        <div id="view-data" class="view-section active-view">
+            <section class="screen-fold">
+                
+                <div class="grid-row header-row">
+                    <div class="bg-stack">
+                        <img src="yvl.png" class="bg-watermark" alt="YVL BG">
+                    </div>
+                    
+                    <div class="manifesto-box" id="profileCard">
+                        <div class="box-header" id="profileHeader">
+                            <div class="header-section primary" id="headerId">profile / 01</div>
+                            <div class="header-section secondary" id="headerArchive">notes</div>
+                            <div id="archiveLabel" class="header-section label-subtle">read somewhere</div>
+                        </div>
+                        
+                        <div class="manifesto-inner">
+                            <p id="bioText" class="manifesto-text"></p>
+                        </div>
+                        
+                        <div class="box-footer">
+                            <div class="footer-left">
+                                <div class="footer-serial" id="footerSerial">yvl/notes/bird.txt</div>
+                            </div>
+                            <div class="footer-controls">
+                                <div class="nav-arrows">
+                                    <button id="btnPrevProfile" class="btn-arrow">&lt;</button>
+                                    <button id="btnNextProfile" class="btn-arrow">&gt;</button>
+                                    <button id="btnRewrite" class="btn-sync" data-i18n="btn_refresh">[ UPDATE ]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="telemetry-row">
+                    <div class="telemetry-label" data-i18n="label_telemetry">live_sensors</div>
+                    <div class="data-list">
+                        <div class="data-item interactive" data-car-id="GT3_CUP">
+                            <div class="item-top">
+                                <span class="big-number">I</span>
+                                <span class="tech-badge">PRJ_992</span>
+                            </div>
+                            <div class="item-bottom">
+                                <span class="item-title" data-i18n="item_engine">Porsche 911 GT3 Cup</span>
+                                <span class="item-desc" data-i18n="desc_gt3">FLAT-6 NA // 510 HP</span>
+                            </div>
+                        </div>
+
+                        <div class="data-item interactive" data-car-id="RB19_F1">
+                            <div class="item-top">
+                                <span class="big-number">II</span>
+                                <span class="tech-badge">HRC_PWR</span>
+                            </div>
+                            <div class="item-bottom">
+                                <span class="item-title" data-i18n="item_nurburg">Red Bull RB19</span>
+                                <span class="item-desc" data-i18n="desc_rb19">V6 HYBRID // 15K RPM</span>
+                            </div>
+                        </div>
+
+                        <div class="data-item interactive" data-car-id="MAZDA_787B">
+                            <div class="item-top">
+                                <span class="big-number">III</span>
+                                <span class="tech-badge">R26B_4</span>
+                            </div>
+                            <div class="item-bottom">
+                                <span class="item-title" data-i18n="item_aero">Mazda 787B</span>
+                                <span class="item-desc" data-i18n="desc_787">4-ROTOR // LEMANS SPEC</span>
+                            </div>
+                        </div>
+
+                        <div class="data-item interactive" data-car-id="AUDI_S1">
+                            <div class="item-top">
+                                <span class="big-number">IV</span>
+                                <span class="tech-badge">GRP_B_E2</span>
+                            </div>
+                            <div class="item-bottom">
+                                <span class="item-title" data-i18n="item_max">Audi Sport Quattro S1</span>
+                                <span class="item-desc" data-i18n="desc_s1">I5 TURBO // GRP.B AERO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="terminal-section" class="screen-terminal">
+                <div class="terminal-bg-art">
+                    <div class="pixel-frame">
+                        <div class="pixel-shape"></div>
+                    </div>
+                </div>
+
+                <div class="terminal-large" id="terminalWindow">
+                    <div class="terminal-top-bar" id="terminalHeader">
+                        <div class="window-dots">
+                            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        </div>
+                        <div class="window-title" data-i18n="term_title">console.log</div>
+                        <div class="spacer-sm"></div>
+                    </div>
+                    
+                    <div id="terminalOutput" class="terminal-display"></div>
+                    
+                    <div class="input-line" id="inputTrigger">
+                        <span class="prompt">/</span>
+                        <input type="text" id="terminalInput" placeholder="RUN..." autocomplete="off">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="view-media" class="view-section">
+            <div class="onboard-row">
+                <div class="video-station">
+                    <!-- Monitor 1 -->					
+                    <div class="monitor-cell">
+                        <div class="monitor-header">
+                            <span class="monitor-id" data-i18n="cam_01">cam_01</span>
+                         </div>
+                        <div class="monitor-screen">
+                            <video loop playsinline controls poster="media/Poster/poster_01.jpg">
+                                <source src="media/Video/cam_1-SennaMonaco.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Monitor 2 -->
+                    <div class="monitor-cell">
+                        <div class="monitor-header">
+                            <span class="monitor-id" data-i18n="cam_02">cam_02</span>
+                         </div>
+                        <div class="monitor-screen">
+                            <video loop playsinline controls poster="media/Poster/poster_02.jpg">
+                                <source src="media/Video/cam_2-AlonsoMalasya.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Monitor 3 -->
+                    <div class="monitor-cell">
+                        <div class="monitor-header">
+                            <span class="monitor-id" data-i18n="cam_03">cam_03</span>
+                         </div>
+                        <div class="monitor-screen">
+                            <video loop playsinline controls poster="media/Poster/poster_03.jpg">
+                                <source src="media/Video/cam_3-Porsche.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Monitor 4 -->
+                    <div class="monitor-cell">
+                        <div class="monitor-header">
+                            <span class="monitor-id" data-i18n="cam_04">cam_04</span>
+                         </div>
+                        <div class="monitor-screen">
+                            <video loop playsinline controls poster="media/Poster/poster_04.jpg">
+                                <source src="media/Video/cam_4-BMW.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Monitor 5 -->
+                    <div class="monitor-cell">
+                        <div class="monitor-header">
+                            <span class="monitor-id" data-i18n="cam_05">cam_05</span>
+                         </div>
+                        <div class="monitor-screen">
+                            <video loop playsinline controls poster="media/Poster/poster_04.jpg">
+                                <source src="media/Video/cam_5-BMW.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Monitor 6 -->
+                    <div class="monitor-cell">
+                        <div class="monitor-header">
+                            <span class="monitor-id" data-i18n="cam_06">cam_06</span>
+                         </div>
+                        <div class="monitor-screen">
+                            <video loop playsinline controls poster="media/Poster/poster_06.jpg">
+                                <source src="media/Video/cam_6-Laurel.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <footer class="grid-footer">
+            <div class="footer-link-group">
+                <a href="#" target="_blank" class="link">IG</a>
+                <a href="mailto:me@yvl.sh" class="link" data-i18n="link_mail">MAIL</a>
+            </div>
+            <div class="footer-meta">OPEN SOURCE // 2026</div>
+        </footer>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
