@@ -1,4 +1,4 @@
-# YVL / SH 
+# YVL / SH
 
 *You're going to die anyway.*
 
