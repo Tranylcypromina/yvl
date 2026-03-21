@@ -1,0 +1,21 @@
+{
+  "id_tag": "RB19_F1",
+  "name": "Oracle Red Bull RB19",
+  "short_desc": "V6 HYBRID // 15K RPM",
+  "category": "HRC_PWR",
+  "subsystems": {
+    "POWER_UNIT": "Honda RBPTH001 1.6L V6 Turbo Hybrid. MGU-K + MGU-H recovery systems.",
+    "AERO_DYNAMICS": "Ground effect venturi tunnels. DRAG REDUCTION SYSTEM (DRS). Blown diffuser.",
+    "CHASSIS": "Carbon-fibre composite monocoque with Halo cockpit protection system.",
+    "STRATEGY": "Negative tire degradation profile. High-fuel load optimization."
+  },
+  "stats": {
+    "TOTAL_OUTPUT": "~1,050 hp",
+    "RPM_LIMIT": "15,000 rpm",
+    "WEIGHT_MIN": "798 kg",
+    "LATERAL_G": "6.0G+ (Suzuka T1)",
+    "FUEL_FLOW": "100 kg/hr (Max)",
+    "ENERGY_STORE": "4 MJ/lap",
+    "0_200_KMH": "~4.5 sec"
+  }
+}

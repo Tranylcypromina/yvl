@@ -1,0 +1,27 @@
+{
+  "en": { 
+      "nav_data": "01_DATA", "nav_media": "02_VIDEO", "nav_quotes": "03_LEGACY", "label_id": "profile / ", 
+      "label_archive": "notes", "label_source": "source: ", "footer_serial": "yvl/notes/", 
+      "btn_refresh": "[ UPDATE ]", "label_telemetry": "live_sensors", "link_mail": "MAIL",
+      "item_engine": "Porsche 911 GT3 Cup (992)", "item_nurburg": "Red Bull RB19",
+      "item_aero": "Mazda 787B", "item_max": "Audi Sport Quattro S1", 
+      "desc_gt3": "FLAT-6 NA // 510 HP", "desc_rb19": "V6 HYBRID // 15K RPM", "desc_787": "4-ROTOR // LEMANS SPEC", "desc_s1": "I5 TURBO // GRP.B AERO",
+      "status_ok": "LINK: STABLE", "term_title": "console.log", "input_placeholder": "RUN...", 
+      "cam_01": "cam_01", "cam_02": "cam_02", "cam_03": "cam_03", "cam_04": "cam_04", "cam_05": "cam_05", "cam_06": "cam_06",
+      "executing": "target:", "sel_option": "select subsystem:", "scanning": "INIT HANDSHAKE...", "sync_complete": "LINK ESTABLISHED.",
+      "boot_1": ": YVL ............ [ LOADED ]", "cmd_help": "COMMANDS: [clear] [date] [dump] [whoami] [exit]", "cmd_whoami": "UID: 0x00 (ROOT)", "cmd_unknown": "ERR_UNKNOWN_CMD. TRY [help]", "read_addr": "READ_ADDR::", "accessing": "ACCESSING::", "dumping": "DUMPING HEAP...",
+      "KEY_MAP": { "ENGINE": "ENGINE", "AERO": "AERO", "CHASSIS": "CHASSIS", "POWER": "POWER", "STRAT": "STRAT", "LEGACY": "LEGACY", "FEEL": "FEEL", "DRIVE": "DRIVE", "MEMORY_DUMP": "MEMORY_DUMP", "TRANSMISSION": "TRANSMISSION", "SUSPENSION": "SUSPENSION", "ELECTRONICS": "ELECTRONICS", "POWER_UNIT": "POWER_UNIT", "AERO_DYNAMICS": "AERO_DYNAMICS", "STRATEGY": "STRATEGY", "ENGINE_ROTARY": "ROTARY_ENGINE", "LEGACY_DATA": "LEGACY_DATA", "BODYWORK": "BODYWORK", "THROTTLE_MAP": "THROTTLE_MAP", "TURBO_SYSTEM": "TURBO_SYSTEM", "DRIVETRAIN": "DRIVETRAIN", "AERO_PACKAGE": "AERO_PACKAGE", "HANDLING": "HANDLING", "POWER_OUTPUT": "POWER_OUTPUT", "DISPLACEMENT": "DISPLACEMENT", "WEIGHT_DRY": "WEIGHT_DRY", "BRAKE_DISCS": "BRAKE_DISCS", "WHEELBASE": "WHEELBASE", "FUEL_CAPACITY": "FUEL_CAPACITY", "AERO_CONFIG": "AERO_CONFIG", "TOTAL_OUTPUT": "TOTAL_OUTPUT", "RPM_LIMIT": "RPM_LIMIT", "WEIGHT_MIN": "WEIGHT_MIN", "LATERAL_G": "LATERAL_G", "FUEL_FLOW": "FUEL_FLOW", "ENERGY_STORE": "ENERGY_STORE", "0_200_KMH": "0_200_KMH", "PEAK_POWER": "PEAK_POWER", "MAX_TORQUE": "MAX_TORQUE", "IDLE_RPM": "IDLE_RPM", "WEIGHT": "WEIGHT", "SOUND_LEVEL": "SOUND_LEVEL", "MPG_AVG": "MPG_AVG", "ENGINE_BLOCK": "ENGINE_BLOCK", "0_100_KMH": "0_100_KMH", "WEIGHT_DIST": "WEIGHT_DIST", "WHEEL_WIDTH": "WHEEL_WIDTH", "BOOST_LAG": "BOOST_LAG", "TOP_SPEED": "TOP_SPEED", "COOLING": "COOLING" }
+  },
+  "es": { 
+      "nav_data": "01_DATOS", "nav_media": "02_VÍDEO", "nav_quotes": "03_LEGADO", "label_id": "perfil / ", 
+      "label_archive": "notas", "label_source": "fuente: ", "footer_serial": "yvl/notas/", 
+      "btn_refresh": "[ ACTUALIZAR ]", "label_telemetry": "sensores_vivos", "link_mail": "CORREO",
+      "item_engine": "Porsche 911 GT3 Cup (992)", "item_nurburg": "Red Bull RB19", "item_aero": "Mazda 787B", "item_max": "Audi Sport Quattro S1", 
+      "desc_gt3": "BÓXER-6 ATM // 510 CV", "desc_rb19": "V6 HÍBRIDO // 15K RPM", "desc_787": "4-ROTORES // SPEC LEMANS", "desc_s1": "5-CIL TURBO // GRP.B AERO",
+      "status_ok": "ENLACE: ESTABLE", "term_title": "consola.log", "input_placeholder": "EJECUTAR...", 
+      "cam_01": "cam_01", "cam_02": "cam_02", "cam_03": "cam_03", "cam_04": "cam_04", "cam_05": "cam_05", "cam_06": "cam_06",
+      "executing": "objetivo:", "sel_option": "seleccionar subsistema:", "scanning": "INICIANDO HANDSHAKE...", "sync_complete": "ENLACE ESTABLECIDO.",
+      "boot_1": ": YVL ............ [ CARGADO ]", "cmd_help": "COMANDOS: [clear] [date] [dump] [whoami] [exit]", "cmd_whoami": "UID: 0x00 (RAÍZ)", "cmd_unknown": "ERR_COMANDO_DESCONOCIDO. PRUEBA [help]", "read_addr": "LEER_DIR::", "accessing": "ACCEDIENDO::", "dumping": "VOLCANDO MEMORIA...",
+      "KEY_MAP": { "ENGINE": "MOTOR", "AERO": "AERO", "CHASSIS": "CHASIS", "POWER": "POTENCIA", "STRAT": "ESTRATEGIA", "LEGACY": "LEGADO", "FEEL": "SENSACIÓN", "DRIVE": "CONDUCCIÓN", "MEMORY_DUMP": "VOLCADO_MEMORIA", "TRANSMISSION": "TRANSMISIÓN", "SUSPENSION": "SUSPENSIÓN", "ELECTRONICS": "ELECTRÓNICA", "POWER_UNIT": "UNIDAD_POTENCIA", "AERO_DYNAMICS": "AERODINÁMICA", "STRATEGY": "ESTRATEGIA", "ENGINE_ROTARY": "MOTOR_ROTATIVO", "LEGACY_DATA": "DATOS_LEGADO", "BODYWORK": "CARROCERÍA", "THROTTLE_MAP": "MAPA_ACELERADOR", "TURBO_SYSTEM": "SISTEMA_TURBO", "DRIVETRAIN": "TREN_MOTRIZ", "AERO_PACKAGE": "PAQUETE_AERO", "HANDLING": "MANEJO", "POWER_OUTPUT": "POTENCIA_SALIDA", "DISPLACEMENT": "CILINDRADA", "WEIGHT_DRY": "PESO_SECO", "BRAKE_DISCS": "DISCOS_FRENO", "WHEELBASE": "DIST_EJES", "FUEL_CAPACITY": "CAP_COMBUSTIBLE", "AERO_CONFIG": "CONF_AERO", "TOTAL_OUTPUT": "POTENCIA_TOTAL", "RPM_LIMIT": "LIMITE_RPM", "WEIGHT_MIN": "PESO_MIN", "LATERAL_G": "G_LATERAL", "FUEL_FLOW": "FLUJO_COMB", "ENERGY_STORE": "ALM_ENERGIA", "0_200_KMH": "0_200_KMH", "PEAK_POWER": "PICO_POTENCIA", "MAX_TORQUE": "PAR_MAXIMO", "IDLE_RPM": "RALENTÍ", "WEIGHT": "PESO", "SOUND_LEVEL": "NIVEL_SONORO", "MPG_AVG": "CONSUMO_MED", "ENGINE_BLOCK": "BLOQUE_MOTOR", "0_100_KMH": "0_100_KMH", "WEIGHT_DIST": "DIST_PESO", "WHEEL_WIDTH": "ANCHO_RUEDA", "BOOST_LAG": "LAG_TURBO", "TOP_SPEED": "VEL_MAXIMA", "COOLING": "REFRIGERACION" }
+  }
+}

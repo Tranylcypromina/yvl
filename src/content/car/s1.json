@@ -1,0 +1,21 @@
+{
+  "id_tag": "AUDI_S1",
+  "name": "Audi Sport Quattro S1 E2",
+  "short_desc": "I5 TURBO // GRP.B AERO",
+  "category": "GRP_B_E2",
+  "subsystems": {
+    "TURBO_SYSTEM": "KKK K27 Turbocharger at 2.1 bar. Recirculating anti-lag system (Bang-Bang).",
+    "DRIVETRAIN": "Quattro Permanent All-Wheel Drive. Torsen center differential.",
+    "AERO_PACKAGE": "Pikes Peak configuration. Massive front apron & rear double-wing.",
+    "HANDLING": "Severe understeer characteristic requiring Scandinavian Flick entry."
+  },
+  "stats": {
+    "ENGINE_BLOCK": "Inline-5 DOHC 20v",
+    "0_100_KMH": "3.1s (Gravel)",
+    "WEIGHT_DIST": "55/45 Front/Rear",
+    "WHEEL_WIDTH": "12 inches",
+    "BOOST_LAG": "Significant <4k rpm",
+    "TOP_SPEED": "220 km/h (Gearing ltd)",
+    "COOLING": "Rear-mounted Radiator"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id_tag": "GT3_CUP",
+  "name": "911 GT3 Cup (992)",
+  "short_desc": "FLAT-6 NA // 510 HP",
+  "category": "PRJ_992",
+  "subsystems": {
+    "ENGINE": "4.0L Water-Cooled Flat-6 Boxer. Dry-sump lubrication. 8400 RPM Redline.",
+    "TRANSMISSION": "Porsche 6-speed sequential dog-type. Pneumatic paddle shift.",
+    "SUSPENSION": "Front: Double wishbone axle. Rear: Multi-link axle. Adjustable camber/toe.",
+    "ELECTRONICS": "Bosch MS 6.6 ECU. Cosworth ICD Color Display. Traction Control (TC)."
+  },
+  "stats": {
+    "POWER_OUTPUT": "375 kW (510 hp)",
+    "DISPLACEMENT": "3,996 cm³",
+    "WEIGHT_DRY": "1,260 kg",
+    "BRAKE_DISCS": "380mm Vented",
+    "WHEELBASE": "2,459 mm",
+    "FUEL_CAPACITY": "110 Liters (FT3)",
+    "AERO_CONFIG": "Swan-neck rear wing (11 pos)"
+  }
+}

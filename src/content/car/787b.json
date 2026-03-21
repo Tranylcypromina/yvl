@@ -1,0 +1,21 @@
+{
+  "id_tag": "MAZDA_787B",
+  "name": "Mazda 787B #55",
+  "short_desc": "4-ROTOR // LEMANS SPEC",
+  "category": "R26B_4",
+  "subsystems": {
+    "ENGINE_ROTARY": "Mazda R26B 4-Rotor Wankel. 2616cc. Variable Intake Telescopic Pipes.",
+    "LEGACY_DATA": "First Japanese manufacturer to win 24 Hours of Le Mans (1991).",
+    "BODYWORK": "Carbon fiber/kevlar composite. Renown livery serialization.",
+    "THROTTLE_MAP": "Linear mechanical cable. No traction aids. Pure analog input."
+  },
+  "stats": {
+    "PEAK_POWER": "700 bhp @ 9000 rpm",
+    "MAX_TORQUE": "608 Nm @ 6500 rpm",
+    "IDLE_RPM": "3,000 rpm",
+    "WEIGHT": "830 kg",
+    "TRANSMISSION": "Porsche 5-speed manual",
+    "SOUND_LEVEL": "125dB (At exhaust)",
+    "MPG_AVG": "1.8 mpg"
+  }
+}
