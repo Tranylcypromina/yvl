@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Sidebar from '../components/Sidebar.astro';
 import TelemetryGrid from '../components/TelemetryGrid.astro';
-import Terminal from '../components/Terminal.astro';
 import VideoGrid from '../components/VideoGrid.astro';
 import MindsTimeline from '../components/MindsTimeline.astro';
 
@@ -11,30 +10,31 @@ import DATA_STORE from '../data/store.json';
 ---
 
 <Layout>
-    <aside class="sidebar">
+    <div class="background-canvas tabular-data">
+        <img src="/media/porsche_1.jpg" alt="Porsche GT3 night support archive" class="bg-image">
+        <div class="bg-overlay"></div>
+    </div>
+
+    <aside class="sidebar tabular-data">
         <div class="brand-block" id="btnReset">
             <h1 class="hero-title">YVL<br>/ SH</h1>
         </div>
         <nav class="nav-vertical">
             <button class="nav-main active" data-target="view-data" data-i18n="nav_data">01_DATA</button>
             <button class="nav-main" data-target="view-media" data-i18n="nav_media">02_VIDEO</button>
-            <button class="nav-main" data-target="view-quotes" data-i18n="nav_quotes">03_MINDS</button>
+            <button class="nav-main" data-target="view-quotes" data-i18n="nav_quotes">03_LEGACY</button>
             <div class="nav-system">
                 <div id="sysClock" class="nav-sm clock-box">00:00:00</div>
                 <button id="langToggle" class="nav-sm">[ ES ]</button>
-                <button id="themeToggle" class="nav-sm">[ DAY ]</button>
             </div>
             <div class="sys-message">You're going to die anyway</div>
         </nav>
     </aside>
 
-    <main class="content-feed">
+    <main class="content-feed tabular-data">
         <div id="view-data" class="view-section active-view">
             <section class="screen-fold">
                 <div class="grid-row header-row">
-                    <div class="bg-stack">
-                        <img src="/media/yvl.png" class="bg-watermark" alt="YVL BG">
-                    </div>
                     <div class="manifesto-box" id="profileCard">
                         <div class="box-header" id="profileHeader">
                             <div class="header-section primary" id="headerId">profile / 01</div>
@@ -62,7 +62,25 @@ import DATA_STORE from '../data/store.json';
                 <TelemetryGrid />
             </section>
 
-            <Terminal />
+            <section class="screen-terminal" id="terminal-section">
+                
+                <div class="terminal-large" id="terminalWindow">
+                    <div class="terminal-top-bar" id="terminalHeader">
+                        <div class="window-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="window-title" data-i18n="term_title">console.log</div>
+                    </div>
+                    <div class="terminal-display tabular-data" id="terminalOutput">
+                        </div>
+                    <div class="input-line" id="inputTrigger">
+                        <span class="prompt">$</span>
+                        <input type="text" id="terminalInput" placeholder="EJECUTAR..." maxlength="50" autocomplete="off" spellcheck="false" data-i18n="input_placeholder">
+                    </div>
+                </div>
+            </section>
         </div>
 
         <div id="view-media" class="view-section">
@@ -174,13 +192,12 @@ import DATA_STORE from '../data/store.json';
                 
                 this.cacheDOM(); 
                 this.bindEvents(); 
-                this.bindDraggables(); 
+                if(this.bindDraggables) this.bindDraggables(); 
                 
                 this.applyTranslations(false); 
                 this.updateLangButton();
                 
-                const isDark = document.body.classList.contains('dark-mode');
-                if(this.elements.btnTheme) this.elements.btnTheme.textContent = isDark ? '[ NIGHT ]' : '[ DAY ]';
+                document.body.classList.add('dark-mode');
                 
                 this.renderProfile(false); 
                 QuotesSystem.init(); 
@@ -188,31 +205,25 @@ import DATA_STORE from '../data/store.json';
                 this.systemBoot(); 
                 this.bindVideoLogic(); 
                 this.initClock(); 
-                this.startBackgroundNoise();
             },
             cacheDOM() {
-                this.elements = { body: document.body, terminalOutput: document.getElementById('terminalOutput'), terminalInput: document.getElementById('terminalInput'), inputTrigger: document.getElementById('inputTrigger'), btnLang: document.getElementById('langToggle'), btnTheme: document.getElementById('themeToggle'), btnPrev: document.getElementById('btnPrevProfile'), btnNext: document.getElementById('btnNextProfile'), btnRewrite: document.getElementById('btnRewrite'), bioText: document.getElementById('bioText'), profileCard: document.getElementById('profileCard'), profileHeader: document.getElementById('profileHeader'), terminalWindow: document.getElementById('terminalWindow'), terminalHeader: document.getElementById('terminalHeader'), viewSection: document.getElementById('view-data'), brandTitle: document.querySelector('.brand-block'), sysClock: document.getElementById('sysClock') };
+                this.elements = { body: document.body, terminalOutput: document.getElementById('terminalOutput'), terminalInput: document.getElementById('terminalInput'), inputTrigger: document.getElementById('inputTrigger'), btnLang: document.getElementById('langToggle'), btnPrev: document.getElementById('btnPrevProfile'), btnNext: document.getElementById('btnNextProfile'), btnRewrite: document.getElementById('btnRewrite'), bioText: document.getElementById('bioText'), profileCard: document.getElementById('profileCard'), profileHeader: document.getElementById('profileHeader'), terminalWindow: document.getElementById('terminalWindow'), terminalHeader: document.getElementById('terminalHeader'), viewSection: document.getElementById('view-data'), brandTitle: document.querySelector('.brand-block'), sysClock: document.getElementById('sysClock') };
             },
             bindEvents() {
                 document.querySelectorAll('.nav-main').forEach(btn => { btn.addEventListener('click', (e) => this.handleNav(e)); });
                 
                 if(this.elements.brandTitle) { 
-                    this.elements.brandTitle.addEventListener('click', () => { 
-                        window.location.href = '/'; 
-                    }); 
+                    this.elements.brandTitle.addEventListener('click', () => { window.location.href = '/'; }); 
                 }
                 
                 this.elements.btnLang.addEventListener('click', () => this.toggleLang());
-                this.elements.btnTheme.addEventListener('click', () => this.toggleTheme());
                 this.elements.btnNext.addEventListener('click', () => this.cycleProfile(1));
                 this.elements.btnPrev.addEventListener('click', () => this.cycleProfile(-1));
                 this.elements.btnRewrite.addEventListener('click', () => { this.state.textVariant++; this.renderProfile(); });
                 this.elements.inputTrigger.addEventListener('click', () => this.elements.terminalInput.focus());
                 this.elements.terminalInput.addEventListener('keypress', (e) => this.handleCommand(e));
                 
-                document.querySelectorAll('.data-item').forEach(item => { 
-                    item.addEventListener('click', () => this.handleDataRequest(item)); 
-                });
+                document.querySelectorAll('.data-item').forEach(item => { item.addEventListener('click', () => this.handleDataRequest(item)); });
             },
             bindDraggables() {
                 const makeDraggable = (el, handle) => {
@@ -232,21 +243,14 @@ import DATA_STORE from '../data/store.json';
                     if(overlay && videoEl) {
                         overlay.addEventListener('click', () => {
                             const playPromise = videoEl.play();
-                            if (playPromise !== undefined) {
-                                playPromise.catch(e => console.log("Video Play Error:", e));
-                            }
+                            if (playPromise !== undefined) { playPromise.catch(e => console.log("Video Play Error:", e)); }
                         });
                     }
 
                     if(videoEl) {
                         videoEl.addEventListener('play', () => {
                             screen.classList.add('active-signal'); 
-                            
-                            document.querySelectorAll('video').forEach(otherVideo => {
-                                if (otherVideo !== videoEl && !otherVideo.paused) {
-                                    otherVideo.pause();
-                                }
-                            });
+                            document.querySelectorAll('video').forEach(otherVideo => { if (otherVideo !== videoEl && !otherVideo.paused) { otherVideo.pause(); } });
                         });
                     }
                 });
@@ -254,18 +258,6 @@ import DATA_STORE from '../data/store.json';
             initClock() {
                 const update = () => { const now = new Date(); if(this.elements.sysClock) { this.elements.sysClock.textContent = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }); } };
                 update(); setInterval(update, 1000);
-            },
-            startBackgroundNoise() {
-                setInterval(async () => {
-                    if (this.state.isBusy) return;
-                    if (Math.random() > 0.6) {
-                        const msgs = ["SYS_PING // 0ms", "MEM_ALLOC :: 0x" + Math.floor(Math.random()*65535).toString(16).toUpperCase(), "AUTH_CHECK -> OK", "AERO_MAP_SYNC", "ECU_DIAGNOSTIC_RUN"];
-                        const msg = msgs[Math.floor(Math.random() * msgs.length)];
-                        const entry = { type: 'system background', raw: msg, prefix: '[BKG] ', effect: 'type', isTransient: false };
-                        this.state.terminalLogs.push(entry); if(this.state.terminalLogs.length > 50) this.state.terminalLogs.shift();
-                        if(!this.state.activeCarId) { await this.renderLogEntry(entry, false); }
-                    }
-                }, CONFIG.bgNoiseInterval);
             },
             
             async addLog(type, content, prefix = '> ', effect = 'type', isTransient = false, animate = true) {
@@ -402,12 +394,6 @@ import DATA_STORE from '../data/store.json';
                     } else { const key = el.dataset.i18n; if (I18N[this.state.lang][key]) el.textContent = I18N[this.state.lang][key]; }
                 });
                 const inputPlaceholder = I18N[this.state.lang].input_placeholder; if (this.elements.terminalInput && inputPlaceholder) { this.elements.terminalInput.placeholder = inputPlaceholder; }
-            },
-            toggleTheme() {
-                document.body.classList.toggle('dark-mode'); 
-                const isDark = document.body.classList.contains('dark-mode'); 
-                localStorage.setItem('yvl_theme', isDark ? 'dark' : 'light');
-                if(this.elements.btnTheme) this.elements.btnTheme.textContent = isDark ? '[ NIGHT ]' : '[ DAY ]';
             },
             toggleLang() {
                 const newLang = this.state.lang === 'en' ? 'es' : 'en'; this.state.lang = newLang; localStorage.setItem('yvl_lang', newLang);
