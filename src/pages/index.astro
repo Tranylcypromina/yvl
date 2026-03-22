@@ -34,11 +34,12 @@ import DATA_STORE from '../data/store.json';
                 <div id="sysClock" class="nav-sm clock-box">00:00:00</div>
                 <button id="langToggle" class="nav-sm">[ ES ]</button>
             </div>
-            <div class="sys-message">You're going to die anyway</div>
+            <div class="sys-message" id="sysMessage">You're going to die anyway</div>
         </nav>
     </aside>
 
     <main class="content-feed tabular-data">
+        
         <div id="view-data" class="view-section active-view">
             <section class="screen-fold">
                 <div class="grid-row header-row">
@@ -69,21 +70,25 @@ import DATA_STORE from '../data/store.json';
                 <TelemetryGrid />
             </section>
 
-            <section class="screen-terminal" id="terminal-section">
-                <div class="terminal-large" id="terminalWindow">
-                    <div class="terminal-top-bar" id="terminalHeader">
+            <section class="screen-archive" id="archive-section">
+                <div class="archive-large" id="archiveWindow">
+                    <div class="archive-top-bar" id="archiveHeader">
                         <div class="window-dots">
                             <div class="dot"></div>
                             <div class="dot"></div>
                             <div class="dot"></div>
                         </div>
-                        <div class="window-title" data-i18n="term_title">console.log</div>
+                        <div class="window-title" id="archiveWindowTitle">DATABASE // YVL_LEGACY</div>
                     </div>
-                    <div class="terminal-display tabular-data" id="terminalOutput">
+                    <div class="archive-body">
+                        <div class="archive-sidebar" id="archiveIndex">
                         </div>
-                    <div class="input-line" id="inputTrigger">
-                        <span class="prompt">$</span>
-                        <input type="text" id="terminalInput" placeholder="EJECUTAR..." maxlength="50" autocomplete="off" spellcheck="false" data-i18n="input_placeholder">
+                        <div class="archive-content tabular-data">
+                            <div class="archive-content-header" id="archiveContentTitle">WAITING FOR CONNECTION...</div>
+                            <div class="archive-text-area" id="archiveViewer">
+                                > Select a document from the archive.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -99,7 +104,7 @@ import DATA_STORE from '../data/store.json';
 
         <footer class="grid-footer">
             <div class="footer-link-group">
-                <a href="https://www.instagram.com/tranylcypromina" target="_blank" class="link">IG</a>
+                <a href="https://www.instagram.com/tranylcypromina" target="_blank" rel="noopener noreferrer" class="link">IG</a>
                 <a href="mailto:contact@yvl.sh" class="link" data-i18n="link_mail">MAIL</a>
             </div>
             <div class="footer-meta">OPEN SOURCE // 2026</div>
@@ -107,7 +112,41 @@ import DATA_STORE from '../data/store.json';
     </main>
 
     <script define:vars={{ I18N, DATA_STORE }}>
-        const CONFIG = { typingSpeed: 1, animDuration: 600, scrollDuration: 1000, bgNoiseInterval: 5000 };
+        const CONFIG = { typingSpeed: 1, animDuration: 600, scrollDuration: 800 };
+
+        const ARCHIVE_I18N = {
+            en: {
+                waiting: "WAITING FOR CONNECTION...",
+                select: "> Select a document from the archive.",
+                title: "DATABASE // YVL_LEGACY",
+                dump_init: "[ INITIATING TELEMETRY DUMP: ",
+                dump_end: "[ DUMP COMPLETED ]",
+                id: "IDENTIFICATION: ",
+                sys_msg: "You're going to die anyway"
+            },
+            es: {
+                waiting: "ESPERANDO CONEXIÓN...",
+                select: "> Selecciona un archivo del índice.",
+                title: "BASE DE DATOS // LEGADO_YVL",
+                dump_init: "[ INICIANDO VOLCADO DE TELEMETRÍA: ",
+                dump_end: "[ VOLCADO COMPLETADO ]",
+                id: "IDENTIFICACIÓN: ",
+                sys_msg: "Vas a morir de todos modos"
+            }
+        };
+
+        const ARCHIVE_DB = {
+            en: [
+                { id: "DOC_01", title: "THE_ORIGIN.TXT", content: "We didn't start this to fit in.\n\nEvery scratch on the chassis is a lesson learned. The obsession with perfection isn't about looking good under dealership lights. It's about not falling apart when you push the machine into the abyss.\n\nLegacy is built in the dark, far away from the cameras." },
+                { id: "DOC_02", title: "FLAT_SIX_TEARDOWN.LOG", content: "Engine block dismantled at 03:00 AM.\n\nTolerances measured in microns. When you look inside a high-performance engine, you realize it's just a vessel for controlled violence. Thousands of explosions per minute, contained within a block of cold aluminum.\n\nIf it doesn't sound dangerous, you are doing it wrong." },
+                { id: "DOC_03", title: "NIGHT_DRIVE.MD", content: "Empty highways. Oil temperature optimal.\n\nThere is a specific moment at 200 km/h where the noise of the world disappears entirely. The only metric that matters is the mechanical connection between flesh and metal.\n\nNo screens. No driver assists. Just raw, unfiltered telemetry." }
+            ],
+            es: [
+                { id: "DOC_01", title: "EL_ORIGEN.TXT", content: "No empezamos esto para encajar.\n\nCada cicatriz en el chasis es una lección aprendida. La obsesión por la perfección no trata de lucir bien bajo las luces de un concesionario. Trata de no desmoronarte cuando empujas la máquina hacia el abismo.\n\nEl legado se construye en la oscuridad, lejos de las cámaras." },
+                { id: "DOC_02", title: "DESMONTAJE_FLAT_SIX.LOG", content: "Bloque motor desmontado a las 03:00 AM.\n\nTolerancias medidas en micras. Cuando miras dentro de un motor de alto rendimiento, te das cuenta de que es solo un recipiente para la violencia controlada. Miles de explosiones por minuto contenidas en un bloque de aluminio frío.\n\nSi no suena peligroso, lo estás haciendo mal." },
+                { id: "DOC_03", title: "CONDUCCION_NOCTURNA.MD", content: "Autopistas vacías. Temperatura del aceite óptima.\n\nHay un momento específico a 200 km/h donde el ruido del mundo desaparece por completo. La única métrica que importa es la conexión mecánica entre la carne y el metal.\n\nSin pantallas. Sin asistencias de conducción. Solo telemetría cruda y sin filtros." }
+            ]
+        };
 
         const Utils = {
             wait: (ms) => new Promise(resolve => setTimeout(resolve, ms)),
@@ -119,29 +158,10 @@ import DATA_STORE from '../data/store.json';
                     element.textContent = ''; let i = 0;
                     const type = () => {
                         if (element.dataset.typeId !== currentRequestId) { resolve(); return; }
-                        if (i < text.length) { 
-                            element.textContent += text.charAt(i); 
-                            i++; 
-                            setTimeout(type, speed + (Math.random() * 4)); 
-                        } else { 
-                            resolve(); 
-                        }
+                        if (i < text.length) { element.textContent += text.charAt(i); i++; setTimeout(type, speed + (Math.random() * 4)); } 
+                        else { resolve(); }
                     };
                     type();
-                });
-            },
-            decryptText: (element, text, speed = 2) => {
-                if (speed === 0) { element.textContent = text; return Promise.resolve(); }
-                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*[]{}<>";
-                let iterations = 0; const currentRequestId = Math.random().toString(36).substring(2, 9);
-                element.dataset.typeId = currentRequestId;
-                return new Promise(resolve => {
-                    const interval = setInterval(() => {
-                        if (element.dataset.typeId !== currentRequestId) { clearInterval(interval); resolve(); return; }
-                        element.textContent = text.split("").map((letter, index) => { if (index < iterations) return text[index]; return chars[Math.floor(Math.random() * chars.length)]; }).join("");
-                        if (iterations >= text.length) { clearInterval(interval); resolve(); }
-                        iterations += 1; 
-                    }, speed);
                 });
             },
             scrollTo: (element, duration = 1000) => {
@@ -151,11 +171,48 @@ import DATA_STORE from '../data/store.json';
                 function animation(currentTime) {
                     if (startTime === null) startTime = currentTime;
                     const timeElapsed = currentTime - startTime; let run; let t = timeElapsed / (duration / 2);
-                    if (t < 1) run = distance / 2 * Math.pow(2, 10 * (t - 1)) + startPos; else { t--; run = distance / 2 * (-Math.pow(2, -10 * t) + 2) + startPos; }
+                    if (t < 1) run = distance / 2 * Math.pow(2, 10 * (t - 1)) + startPos; 
+                    else { t--; run = distance / 2 * (-Math.pow(2, -10 * t) + 2) + startPos; }
                     window.scrollTo(0, run);
                     if (timeElapsed < duration) requestAnimationFrame(animation);
                 }
                 requestAnimationFrame(animation);
+            }
+        };
+
+        const ArchiveSystem = {
+            init() {
+                this.indexContainer = document.getElementById('archiveIndex');
+                this.titleElement = document.getElementById('archiveContentTitle');
+                this.viewerElement = document.getElementById('archiveViewer');
+                this.windowTitle = document.getElementById('archiveWindowTitle');
+                if (!this.indexContainer || !this.viewerElement) return;
+                this.renderIndex();
+            },
+            renderIndex() {
+                this.indexContainer.innerHTML = '';
+                const currentDocs = ARCHIVE_DB[App.state.lang] || ARCHIVE_DB['en'];
+                
+                currentDocs.forEach((doc) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'archive-file-btn';
+                    btn.textContent = `[ ${doc.id} ] - ${doc.title}`;
+                    btn.onclick = () => this.loadFile(doc.title, doc.content, btn);
+                    this.indexContainer.appendChild(btn);
+                });
+
+                const t = ARCHIVE_I18N[App.state.lang];
+                this.titleElement.textContent = t.waiting;
+                this.viewerElement.textContent = t.select;
+                this.windowTitle.textContent = t.title;
+            },
+            async loadFile(title, content, btnElement = null) {
+                document.querySelectorAll('.archive-file-btn').forEach(b => b.classList.remove('active'));
+                if (btnElement) btnElement.classList.add('active');
+                
+                const readingPrefix = App.state.lang === 'es' ? 'LEYENDO: ' : 'READING: ';
+                this.titleElement.textContent = `${readingPrefix}${title}`;
+                await Utils.typeText(this.viewerElement, content, 2);
             }
         };
 
@@ -188,252 +245,163 @@ import DATA_STORE from '../data/store.json';
         };
 
         const App = {
-            state: { lang: 'en', profileIndex: 0, textVariant: 0, isBusy: false, activeCarId: null, terminalLogs: [] },
+            state: { lang: 'en', profileIndex: 0, textVariant: 0, activeCarId: null },
             elements: {},
             init() {
                 const savedLang = localStorage.getItem('yvl_lang'); 
-                if (savedLang && (savedLang === 'en' || savedLang === 'es')) { 
-                    this.state.lang = savedLang; 
-                }
-                
-                this.cacheDOM(); 
-                this.bindEvents(); 
-                if(this.bindDraggables) this.bindDraggables(); 
-                
-                this.applyTranslations(false); 
-                this.updateLangButton();
-                
-                document.body.classList.add('dark-mode');
-                
-                this.renderProfile(false); 
-                QuotesSystem.init(); 
-                
-                this.systemBoot(); 
-                this.bindVideoLogic(); 
-                this.initClock(); 
+                if (savedLang && (savedLang === 'en' || savedLang === 'es')) { this.state.lang = savedLang; }
+                this.cacheDOM(); this.bindEvents(); if(this.bindDraggables) this.bindDraggables(); 
+                this.applyTranslations(false); this.updateLangButton();
+                document.body.classList.add('dark-mode'); 
+                this.renderProfile(false); QuotesSystem.init(); ArchiveSystem.init(); 
+                this.bindVideoLogic(); this.initClock(); 
             },
             cacheDOM() {
-                this.elements = { body: document.body, terminalOutput: document.getElementById('terminalOutput'), terminalInput: document.getElementById('terminalInput'), inputTrigger: document.getElementById('inputTrigger'), btnLang: document.getElementById('langToggle'), btnPrev: document.getElementById('btnPrevProfile'), btnNext: document.getElementById('btnNextProfile'), btnRewrite: document.getElementById('btnRewrite'), bioText: document.getElementById('bioText'), profileCard: document.getElementById('profileCard'), profileHeader: document.getElementById('profileHeader'), terminalWindow: document.getElementById('terminalWindow'), terminalHeader: document.getElementById('terminalHeader'), viewSection: document.getElementById('view-data'), brandTitle: document.querySelector('.brand-block'), sysClock: document.getElementById('sysClock') };
+                this.elements = { 
+                    body: document.body, btnLang: document.getElementById('langToggle'), btnPrev: document.getElementById('btnPrevProfile'), 
+                    btnNext: document.getElementById('btnNextProfile'), btnRewrite: document.getElementById('btnRewrite'), bioText: document.getElementById('bioText'), 
+                    profileCard: document.getElementById('profileCard'), profileHeader: document.getElementById('profileHeader'), archiveWindow: document.getElementById('archiveWindow'), 
+                    archiveHeader: document.getElementById('archiveHeader'), viewSection: document.getElementById('view-data'), brandTitle: document.querySelector('.brand-block'), 
+                    sysClock: document.getElementById('sysClock'), sysMessage: document.getElementById('sysMessage')
+                };
             },
             bindEvents() {
                 document.querySelectorAll('.nav-main').forEach(btn => { btn.addEventListener('click', (e) => this.handleNav(e)); });
-                
-                if(this.elements.brandTitle) { 
-                    this.elements.brandTitle.addEventListener('click', () => { window.location.href = '/'; }); 
-                }
-                
+                if(this.elements.brandTitle) { this.elements.brandTitle.addEventListener('click', () => { window.location.href = '/'; }); }
                 this.elements.btnLang.addEventListener('click', () => this.toggleLang());
                 this.elements.btnNext.addEventListener('click', () => this.cycleProfile(1));
                 this.elements.btnPrev.addEventListener('click', () => this.cycleProfile(-1));
                 this.elements.btnRewrite.addEventListener('click', () => { this.state.textVariant++; this.renderProfile(); });
-                this.elements.inputTrigger.addEventListener('click', () => this.elements.terminalInput.focus());
-                this.elements.terminalInput.addEventListener('keypress', (e) => this.handleCommand(e));
-                
                 document.querySelectorAll('.data-item').forEach(item => { item.addEventListener('click', () => this.handleDataRequest(item)); });
+
+                window.addEventListener('keydown', (e) => {
+                    const key = e.key.toLowerCase();
+                    if (key === '1') document.querySelector('[data-target="view-data"]')?.click();
+                    else if (key === '2') document.querySelector('[data-target="view-media"]')?.click();
+                    else if (key === '3') document.querySelector('[data-target="view-quotes"]')?.click();
+                });
             },
             bindDraggables() {
                 const makeDraggable = (el, handle) => {
+                    if (!el || !handle) return;
                     let isDragging = false, start = { x: 0, y: 0 }, offset = { x: 0, y: 0 }; 
-                    handle.addEventListener('mousedown', (e) => { if (window.innerWidth <= 768) return; isDragging = true; start.x = e.clientX - offset.x; start.y = e.clientY - offset.y; el.style.transition = 'none'; el.style.zIndex = 100; });
-                    document.addEventListener('mouseup', () => { if (!isDragging) return; isDragging = false; el.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)'; el.style.transform = `translate3d(0px, 0px, 0)`; offset = { x: 0, y: 0 }; });
-                    document.addEventListener('mousemove', (e) => { if (!isDragging) return; e.preventDefault(); const currentX = e.clientX - start.x; const currentY = e.clientY - start.y; if (Math.abs(currentX) < window.innerWidth && Math.abs(currentY) < window.innerHeight) { offset.x = currentX; offset.y = currentY; el.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`; } });
+                    handle.addEventListener('mousedown', (e) => { 
+                        if (window.innerWidth <= 768) return; 
+                        isDragging = true; start.x = e.clientX - offset.x; start.y = e.clientY - offset.y; 
+                        el.style.transition = 'none'; el.style.zIndex = 100; 
+                    });
+                    document.addEventListener('mouseup', () => { 
+                        if (!isDragging) return; isDragging = false; 
+                        el.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)'; el.style.transform = `translate3d(0px, 0px, 0)`; offset = { x: 0, y: 0 }; 
+                    });
+                    document.addEventListener('mousemove', (e) => { 
+                        if (!isDragging) return; e.preventDefault(); 
+                        const currentX = e.clientX - start.x; const currentY = e.clientY - start.y; 
+                        if (Math.abs(currentX) < window.innerWidth && Math.abs(currentY) < window.innerHeight) { 
+                            offset.x = currentX; offset.y = currentY; el.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`; 
+                        } 
+                    });
                 };
-                makeDraggable(this.elements.profileCard, this.elements.profileHeader); makeDraggable(this.elements.terminalWindow, this.elements.terminalHeader);
+                makeDraggable(this.elements.profileCard, this.elements.profileHeader); 
+                makeDraggable(this.elements.archiveWindow, this.elements.archiveHeader);
             },
             bindVideoLogic() {
                 const screens = document.querySelectorAll('.monitor-screen');
                 screens.forEach(screen => {
                     const overlay = screen.querySelector('.video-overlay');
                     const videoEl = screen.querySelector('video');
-                    
                     if(overlay && videoEl) {
                         overlay.addEventListener('click', () => {
                             const playPromise = videoEl.play();
-                            if (playPromise !== undefined) { playPromise.catch(e => console.log("Video Play Error:", e)); }
+                            if (playPromise !== undefined) playPromise.catch(e => console.log("Video Error:", e)); 
                         });
                     }
-
                     if(videoEl) {
                         videoEl.addEventListener('play', () => {
                             screen.classList.add('active-signal'); 
-                            document.querySelectorAll('video').forEach(otherVideo => { if (otherVideo !== videoEl && !otherVideo.paused) { otherVideo.pause(); } });
+                            document.querySelectorAll('video').forEach(otherVideo => { if (otherVideo !== videoEl && !otherVideo.paused) otherVideo.pause(); });
                         });
                     }
                 });
             },
             initClock() {
-                const update = () => { const now = new Date(); if(this.elements.sysClock) { this.elements.sysClock.textContent = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }); } };
+                const update = () => { 
+                    const now = new Date(); 
+                    if(this.elements.sysClock) this.elements.sysClock.textContent = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }); 
+                };
                 update(); setInterval(update, 1000);
             },
-            
-            async addLog(type, content, prefix = '> ', effect = 'type', isTransient = false, animate = true) {
-                const entry = { type, content, prefix, effect, isTransient }; 
-                this.state.terminalLogs.push(entry); 
-                await this.renderLogEntry(entry, animate);
-            },
-
-            async renderLogEntry(entry, animate = true, langOverride = null) {
-                let container = this.elements.terminalOutput;
-                if (entry.content.type === 'dump') { await this.renderHexDump(container, animate); return; }
-                const line = document.createElement('div'); line.className = `line ${entry.type}`;
-                
-                const wrapper = container.querySelector('.cmd-options-wrapper');
-                if (wrapper) { container.insertBefore(line, wrapper); } else { container.appendChild(line); }
-                
-                let textToDisplay = "";
-                if (entry.content.key) {
-                    const currentLang = langOverride || this.state.lang; const langObj = I18N[currentLang] || I18N['en']; const t = langObj[entry.content.key] || entry.content.key;
-                    let params = entry.content.params || []; params = params.map(p => langObj.KEY_MAP?.[p] || p);
-                    textToDisplay = t + (params.length ? " " + params.join(" ") : "");
-                } else if (entry.content.carId) {
-                    const currentLang = langOverride || this.state.lang; const carData = DATA_STORE[currentLang].CARS[entry.content.carId];
-                    if (entry.content.isStat) {
-                        const val = carData?.STATS?.[entry.content.dataKey] || "N/A"; const label = I18N[currentLang].KEY_MAP?.[entry.content.dataKey] || entry.content.dataKey;
-                        const hash = Math.floor(Math.random()*255).toString(16).toUpperCase().padStart(2,'0'); textToDisplay = `0x${hash} [${label}] ${val}`;
-                    } else { const val = carData?.[entry.content.dataKey] || "N/A"; textToDisplay = `>> ${val}`; }
-                } else if (entry.content.raw) { textToDisplay = entry.content.raw; }
-                
-                const fullText = (entry.prefix || "") + textToDisplay; 
-                const speed = animate ? (entry.effect === 'decrypt' ? 2 : CONFIG.typingSpeed) : 0;
-                
-                if (entry.effect === 'decrypt') { await Utils.decryptText(line, fullText, speed); } else { await Utils.typeText(line, fullText, speed); }
-                this.elements.terminalOutput.scrollTop = this.elements.terminalOutput.scrollHeight;
-            },
-
-            async renderHexDump(target, animate = true) {
-                const container = document.createElement('div'); container.className = 'line system'; container.style.fontSize = '10px'; container.style.opacity = '0.7'; container.style.lineHeight = '1.2';
-                
-                const wrapper = target.querySelector('.cmd-options-wrapper');
-                if (wrapper) { target.insertBefore(container, wrapper); } else { target.appendChild(container); }
-
-                for (let i = 0; i < 12; i++) {
-                    const addr = `0x${Math.floor(Math.random()*65535).toString(16).toUpperCase().padStart(4, '0')}`;
-                    const hex = Array(8).fill(0).map(() => Math.floor(Math.random()*255).toString(16).toUpperCase().padStart(2, '0')).join(" ");
-                    const line = document.createElement('div'); line.textContent = `${addr}: ${hex}`; container.appendChild(line);
-                    if (animate) { this.elements.terminalOutput.scrollTop = this.elements.terminalOutput.scrollHeight; await Utils.wait(20); }
-                }
-            },
-
-            renderFullTerminal(forcedLang = null) {
-                const lang = forcedLang || this.state.lang; this.elements.terminalOutput.innerHTML = '';
-                this.state.terminalLogs.forEach(entry => { this.renderLogEntry(entry, false, lang); });
-                if (this.state.activeCarId) { this.showCarOptions(this.state.activeCarId); }
-            },
-            
-            async systemBoot() { await Utils.wait(500); await this.addLog('system', { key: 'boot_1' }); },
-            
             async handleDataRequest(item) {
-                if (this.state.isBusy) return; this.state.isBusy = true;
                 const carId = item.dataset.carId; this.state.activeCarId = carId;
-                const list = item.closest('.data-list'); list.classList.add('locked'); item.classList.add('active-selection');
-                Utils.scrollTo(document.getElementById('terminal-section'), CONFIG.scrollDuration);
                 
-                this.state.terminalLogs = []; 
-                const oldContainer = document.querySelector('.cmd-options-wrapper'); if (oldContainer) oldContainer.remove();
-                this.elements.terminalOutput.innerHTML = '';
+                document.querySelectorAll('.data-item').forEach(i => i.classList.remove('active-selection'));
+                item.classList.add('active-selection');
+                Utils.scrollTo(document.getElementById('archive-section'), CONFIG.scrollDuration);
                 
-                await this.addLog('user', { key: 'executing', params: [carId] }, '$ '); await Utils.wait(150);
-                await this.addLog('system', { key: 'scanning' }); await this.addLog('system', { type: 'dump' }); 
-                await this.addLog('system', { key: 'sync_complete' }, '> ', 'decrypt'); await Utils.wait(200);
-                await this.addLog('system', { key: 'sel_option' }); 
+                const langObj = I18N[this.state.lang];
+                const tUI = ARCHIVE_I18N[this.state.lang];
+                const carData = DATA_STORE[this.state.lang].CARS[carId];
                 
-                this.showCarOptions(carId); 
-                list.classList.remove('locked'); item.classList.remove('active-selection'); 
-                this.state.isBusy = false;
-            },
-            
-            showCarOptions(carId) {
-                const data = DATA_STORE[this.state.lang].CARS[carId]; const t = I18N[this.state.lang];
-                const oldContainer = document.querySelector('.cmd-options-wrapper'); if (oldContainer) oldContainer.remove();
-                
-                const wrapper = document.createElement('div'); wrapper.className = 'cmd-options-wrapper'; this.elements.terminalOutput.appendChild(wrapper);
-                const btnContainer = document.createElement('div'); btnContainer.className = 'cmd-options'; wrapper.appendChild(btnContainer);
-                this.elements.terminalOutput.scrollTop = this.elements.terminalOutput.scrollHeight;
-                
-                const specsBtn = document.createElement('button'); specsBtn.className = 'cmd-btn active-btn'; specsBtn.textContent = t.KEY_MAP['MEMORY_DUMP'] || 'MEMORY_DUMP';
-                specsBtn.onclick = () => this.handleSubsystem(carId, 'MEMORY_DUMP'); btnContainer.appendChild(specsBtn);
-                
-                Object.keys(data).forEach(key => {
-                    if (key === 'STATS' || key === 'NAME' || key === 'NOMBRE') return;
-                    const btn = document.createElement('button'); btn.className = 'cmd-btn'; const label = t.KEY_MAP[key] || key; btn.textContent = label; btn.onclick = () => this.handleSubsystem(carId, key); btnContainer.appendChild(btn);
-                });
-            },
-
-            async handleSubsystem(carId, key) {
-                this.elements.terminalInput.focus(); 
-                this.state.terminalLogs = this.state.terminalLogs.filter(log => !log.isTransient);
-                this.renderFullTerminal(); 
-                
-                this.state.isBusy = true;
-                
-                await this.addLog('user', { key: 'accessing', params: [key] }, '$ ', 'type', true, true);
-                
-                if (key === 'MEMORY_DUMP') {
-                    await this.addLog('user', { key: 'dumping', params: [carId] }, '$ ', 'type', true, true);
-                    const stats = DATA_STORE[this.state.lang].CARS[carId].STATS;
-                    for (const [statKey, value] of Object.entries(stats)) { 
-                        await this.addLog('system', { carId, isStat: true, dataKey: statKey }, '', 'type', true, true); 
-                        await Utils.wait(10);
+                let dumpText = `${tUI.dump_init}${carId} ]\n`;
+                dumpText += `${tUI.id}${carData.NAME || carData.NOMBRE}\n===========================================\n\n`;
+                if (carData.STATS) {
+                    for (const [key, value] of Object.entries(carData.STATS)) {
+                        const label = langObj.KEY_MAP?.[key] || key;
+                        dumpText += `> ${label.padEnd(20, '.')} ${value}\n`;
                     }
-                } else { 
-                    await this.addLog('system', { carId, isStat: false, dataKey: key }, '', 'type', true, true); 
                 }
-                
-                this.state.isBusy = false;
+                dumpText += `\n${tUI.dump_end}`;
+                ArchiveSystem.loadFile(`TELEMETRY_${carId}.DAT`, dumpText);
             },
-            
             cycleProfile(dir) {
-                if (this.state.isBusy) return; const profiles = DATA_STORE[this.state.lang].PROFILES; this.state.profileIndex += dir; this.state.textVariant = 0; 
-                if (this.state.profileIndex >= profiles.length) this.state.profileIndex = 0; if (this.state.profileIndex < 0) this.state.profileIndex = profiles.length - 1; this.renderProfile(); 
+                const profiles = DATA_STORE[this.state.lang].PROFILES; this.state.profileIndex += dir; this.state.textVariant = 0; 
+                if (this.state.profileIndex >= profiles.length) this.state.profileIndex = 0; 
+                if (this.state.profileIndex < 0) this.state.profileIndex = profiles.length - 1; 
+                this.renderProfile(); 
             },
             renderProfile(animate = true) {
                 const p = DATA_STORE[this.state.lang].PROFILES[this.state.profileIndex]; const t = I18N[this.state.lang]; const currentText = p.texts[this.state.textVariant % p.texts.length];
-                document.getElementById('headerId').textContent = t.label_id + p.id; document.getElementById('headerArchive').textContent = t.label_archive; document.getElementById('footerSerial').textContent = t.footer_serial + p.path; document.getElementById('archiveLabel').textContent = t.label_source + p.source;
+                document.getElementById('headerId').textContent = t.label_id + p.id; document.getElementById('headerArchive').textContent = t.label_archive; 
+                document.getElementById('footerSerial').textContent = t.footer_serial + p.path; document.getElementById('archiveLabel').textContent = t.label_source + p.source;
                 Utils.typeText(this.elements.bioText, currentText, animate ? 10 : 0);
             },
-            updateLangButton() { this.elements.btnLang.textContent = this.state.lang === 'en' ? '[ ES ]' : '[ ENG ]'; },
+            updateLangButton() { 
+                this.elements.btnLang.textContent = this.state.lang === 'en' ? '[ ES ]' : '[ ENG ]'; 
+                if (this.elements.sysMessage) {
+                    this.elements.sysMessage.textContent = ARCHIVE_I18N[this.state.lang].sys_msg;
+                }
+            },
             applyTranslations(animate = true) {
                 const elements = document.querySelectorAll('[data-i18n]');
                 elements.forEach(el => {
                     if (animate) {
-                        el.classList.add('i18n-fade'); setTimeout(() => { const key = el.dataset.i18n; if (I18N[this.state.lang][key]) el.textContent = I18N[this.state.lang][key]; el.classList.remove('i18n-fade'); }, 200);
+                        el.classList.add('i18n-fade'); 
+                        setTimeout(() => { const key = el.dataset.i18n; if (I18N[this.state.lang][key]) el.textContent = I18N[this.state.lang][key]; el.classList.remove('i18n-fade'); }, 200);
                     } else { const key = el.dataset.i18n; if (I18N[this.state.lang][key]) el.textContent = I18N[this.state.lang][key]; }
                 });
-                const inputPlaceholder = I18N[this.state.lang].input_placeholder; if (this.elements.terminalInput && inputPlaceholder) { this.elements.terminalInput.placeholder = inputPlaceholder; }
             },
             toggleLang() {
                 const newLang = this.state.lang === 'en' ? 'es' : 'en'; this.state.lang = newLang; localStorage.setItem('yvl_lang', newLang);
-                this.updateLangButton(); this.applyTranslations(true); this.renderProfile(false); QuotesSystem.render(true); this.renderFullTerminal(newLang);
+                this.updateLangButton(); this.applyTranslations(true); this.renderProfile(false); QuotesSystem.render(true);
+                ArchiveSystem.renderIndex(); 
             },
             handleNav(e) {
                 document.querySelectorAll('.nav-main').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
                 const targetId = e.target.dataset.target;
-                document.querySelectorAll('.view-section').forEach(sec => { sec.classList.remove('active-view'); if (sec.id === targetId) sec.classList.add('active-view'); });
-                document.querySelectorAll('.monitor-screen').forEach(screen => {
-                    if (screen.classList.contains('active-signal')) { screen.classList.remove('active-signal'); const videoEl = screen.querySelector('video'); if (videoEl) { videoEl.pause(); videoEl.currentTime = 0; } }
+                
+                document.querySelectorAll('.view-section').forEach(sec => { 
+                    sec.classList.remove('active-view'); 
+                    if (sec.id === targetId) sec.classList.add('active-view'); 
                 });
-            },
-            
-            async handleCommand(e) {
-                if (e.key === 'Enter') {
-                    if (this.state.isBusy) return;
-                    
-                    const val = e.target.value.trim().toLowerCase(); if (!val) return; e.target.value = '';
-                    
-                    this.state.isBusy = true;
-                    await this.addLog('user', { raw: val }, '$ ', 'none', false, true); 
-                    
-                    const t = I18N[this.state.lang];
-                    
-                    if (val === 'help') await this.addLog('system', { key: 'cmd_help' }, '> ', 'type', false, true);
-                    else if (val === 'clear') { this.state.terminalLogs = []; this.elements.terminalOutput.innerHTML = ''; if (this.state.activeCarId) this.showCarOptions(this.state.activeCarId); }
-                    else if (val === 'date') await this.addLog('system', { raw: new Date().toISOString() }, '> ', 'type', false, true);
-                    else if (val === 'whoami') await this.addLog('system', { key: 'cmd_whoami' }, '> ', 'type', false, true);
-                    else if (val === 'dump') await this.addLog('system', { type: 'dump' }, '> ', 'type', false, true); 
-                    else await this.addLog('system', { key: 'cmd_unknown' }, '> ', 'type', false, true);
-                    
-                    this.state.isBusy = false;
-                }
+                
+                window.scrollTo(0, 0);
+                
+                document.querySelectorAll('.monitor-screen').forEach(screen => {
+                    if (screen.classList.contains('active-signal')) { 
+                        screen.classList.remove('active-signal'); const videoEl = screen.querySelector('video'); 
+                        if (videoEl) { videoEl.pause(); videoEl.currentTime = 0; } 
+                    }
+                });
             }
         };
 

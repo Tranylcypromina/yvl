@@ -19,12 +19,13 @@ const videos = [
                     <span class="monitor-id">{vid.id}</span>
                 </div>
                 <div class="monitor-screen">
-                    <div class="video-overlay"><span class="blink">REC_</span></div>
+                    <div class="video-overlay">
+                        <span class="blink">REC_</span>
+                    </div>
                     
                     <video preload="auto" playsinline muted loop controls>
                         <source src={vid.src} type="video/mp4" />
                     </video>
-                    
                 </div>
             </div>
         ))}
