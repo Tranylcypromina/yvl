@@ -78,6 +78,42 @@ body.system-busy { cursor: wait; }
 .terminal-display::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
 .terminal-display::-webkit-scrollbar-thumb { background: var(--active); }
 
+.mobile-blocker {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #000000;
+    z-index: 99999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+}
+.blocker-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-style: italic;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+.blocker-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    line-height: 1.6;
+}
+.blocker-icon {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 30px;
+    animation: blink 1.5s infinite;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
 .background-canvas {
     position: fixed; top: 0; left: 0;
     width: 100vw; height: 100vh;
@@ -226,7 +262,6 @@ body.system-busy { cursor: wait; }
 .terminal-large { 
     width: 100%; max-width: 900px; height: clamp(400px, 60vh, 800px); 
     display: flex; flex-direction: column; overflow: hidden; z-index: 20; will-change: transform; 
-
     background: var(--term-glass-bg); 
     border: 1px solid var(--glass-border); 
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
@@ -256,7 +291,36 @@ body.system-busy { cursor: wait; }
 .prompt { font-weight: 700; color: var(--accent); font-size: 14px; }
 input { background: transparent; border: none; outline: none; width: 100%; color: var(--fg); font-family: var(--font-mono); font-size: 14px; transition: none; }
 
-.video-station { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 1400px; padding: 40px;}
+.onboard-row { 
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 40px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.video-onboard-section {
+    position: relative;
+    isolation: isolate;
+    border-top: 1px solid var(--line);
+    background-image: url('/media/porsche_3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.video-onboard-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.70); 
+    z-index: -1;
+}
+
+.video-station { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 1400px; }
 
 .monitor-cell { border: 1px solid var(--line); padding: 12px; transition: border-color 0.2s ease; background: rgba(0,0,0,0.5); }
 .monitor-cell:hover { border-color: #ffffff; }
@@ -312,7 +376,7 @@ video { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1) satu
     display: flex; justify-content: space-between; padding: 40px 80px; 
     border-top: 1px solid var(--line); font-size: 9px; color: var(--accent); 
     position: relative; z-index: 10; 
-    background: #000000;
+    background: #000000; 
 }
 .link { text-decoration: none; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-right: 15px; will-change: opacity, filter, transform; }
 .link:hover { color: #ffffff; }
@@ -323,32 +387,13 @@ video { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1) satu
 [data-i18n] { display: inline-block; }
 
 @media (max-width: 768px) {
-    .sidebar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; padding: 0 20px; flex-direction: row; justify-content: space-between; border-right: none; border-bottom: 1px solid var(--line); z-index: 1000; background: var(--side-bg); }
-    .nav-vertical { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: var(--side-bg); border-top: 1px solid var(--side-line); flex-direction: row; align-items: center; justify-content: space-around; padding: 0; gap: 0; z-index: 1000; margin-top: 0; }
-    .nav-system { position: fixed; top: 0; right: 20px; height: 60px; flex-direction: row; align-items: center; margin: 0; gap: 10px; z-index: 1001; }
-    .brand-block { position: fixed; top: 0; left: 20px; height: 60px; display: flex; align-items: center; z-index: 1001; }
-    .hero-title { font-size: 1.2rem; }
-    .clock-box, .sys-message { display: none !important; }
-    .nav-main { flex: 1; height: 100%; display: flex; align-items: center; justify-content: center; margin: 0 !important; padding: 0 !important; border: none; text-align: center; border-left: none !important; }
-    .nav-main.active { border-top: 4px solid #ffffff; border-bottom: none; background: rgba(255,255,255,0.05); color: #ffffff; }
-    .content-feed { margin-left: 0; width: 100%; padding-top: 60px; padding-bottom: 60px; }
-    .grid-row { padding: 30px 20px; gap: 20px; }
-    .telemetry-row { flex-direction: column; display: flex; padding: 0; }
-    .telemetry-label { padding: 20px; text-align: center; border-right: none; border-bottom: 1px solid var(--line); }
-    .data-list { grid-template-columns: 1fr; }
-    .data-item { padding: 25px 20px; }
-    .data-item:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.1); }
-    .video-station { grid-template-columns: 1fr; padding: 20px; gap: 20px; }
-    .manifesto-box { padding: 35px; min-height: 300px; transform: none !important; margin: 0 auto; }
-    .terminal-large { transform: none !important; height: 60vh; }
-    .box-header, .terminal-top-bar { pointer-events: none; }
-    .terminal-display { padding: 18px; }
-    .input-line { padding: 18px 20px; }
-    .quotes-layout { padding: 40px 20px; }
-    .spine { left: 20px; transform: none; }
-    .q-node.left, .q-node.right { width: 100%; left: 0; margin-top: 0; text-align: left; padding: 30px 20px 30px 40px; border-right: none; border-left: 1px solid var(--line); }
-    .q-node.left:hover, .q-node.right:hover, .q-node.left.active-quote, .q-node.right.active-quote { border-left-color: #ffffff; padding-right: 20px; }
-    .q-node.left .q-marker, .q-node.right .q-marker { left: -4px !important; right: auto !important; }
-    .q-node.left .q-expanded { text-align: left; }
-    .grid-footer { flex-direction: column; gap: 15px; align-items: center; text-align: center; padding: 30px 20px; margin-bottom: 60px; }
+    .sidebar, 
+    .content-feed, 
+    .background-canvas {
+        display: none !important;
+    }
+    
+    .mobile-blocker {
+        display: flex !important;
+    }
 }
